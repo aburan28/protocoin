@@ -116,12 +116,15 @@ class BitcoinBasicClient(object):
         in a receive/send loop."""
         
 
-        while self._running:
+        while True:
             try:
                 data = self.socket.recv(8192)
-                break
+                
             except socket.timeout:
                 continue
+            
+            
+            
             if len(data) <= 0:
                 raise NodeDisconnectException("Node disconnected.")
             
