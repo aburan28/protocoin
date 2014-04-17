@@ -104,14 +104,24 @@ class BitcoinBasicClient(object):
 
         self.socket.sendall(bin_data.getvalue())
         self.handle_send_message(message_header, message)
+    def terminate(self):
+        """
+        Terminates loop 
+        """
+        self._running = False
 
     def loop(self):
+        self._running = True
         """This is the main method of the client, it will enter
         in a receive/send loop."""
+        
 
-        while True:
-            data = self.socket.recv(1024*8)
-
+        while self._running:
+            try:
+                data = self.socket.recv(8192)
+                break
+            except socket.timeout:
+                continue
             if len(data) <= 0:
                 raise NodeDisconnectException("Node disconnected.")
             
