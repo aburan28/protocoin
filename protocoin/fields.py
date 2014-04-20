@@ -7,7 +7,7 @@ import random
 import socket
 
 #: The protocol version
-PROTOCOL_VERSION = 70001
+PROTOCOL_VERSION = 70002
 
 #: The network magic values
 MAGIC_VALUES = {
