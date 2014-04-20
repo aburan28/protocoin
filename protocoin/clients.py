@@ -2,7 +2,7 @@ from cStringIO import StringIO
 from .serializers import *
 from .exceptions import NodeDisconnectException
 import os
-
+from gevent.monkey import patch_all();patch_all()
 class BitcoinBasicClient(object):
     """The base class for a Bitcoin network client, this class
     implements utility functions to create your own class.
@@ -116,7 +116,7 @@ class BitcoinBasicClient(object):
         in a receive/send loop."""
         
 
-        while True:
+        while self._running:
             try:
                 data = self.socket.recv(8192)
             except socket.error, (value,message):
@@ -144,6 +144,7 @@ class BitcoinBasicClient(object):
             handle_func = getattr(self, handle_func_name, None)
             if handle_func:
                 handle_func(message_header, message)
+        self.close_stream()
 
 class BitcoinClient(BitcoinBasicClient):
     """This class implements all the protocol rules needed
