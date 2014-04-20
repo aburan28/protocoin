@@ -2,7 +2,10 @@ from cStringIO import StringIO
 from .serializers import *
 from .exceptions import NodeDisconnectException
 import os
-from gevent.monkey import patch_all();patch_all()
+import gevent.monkey
+
+
+gevent.monkey.patch_all()
 class BitcoinBasicClient(object):
     """The base class for a Bitcoin network client, this class
     implements utility functions to create your own class.
@@ -10,6 +13,7 @@ class BitcoinBasicClient(object):
     :param socket: a socket that supports the makefile()
                    method.
     """
+    _running = False
 
     def __init__(self, socket):
         self.socket = socket
@@ -109,9 +113,11 @@ class BitcoinBasicClient(object):
         Terminates loop 
         """
         self._running = False
+    def start(self):
+        self._running = True
 
     def loop(self):
-        self._running = True
+        #self._running = True
         """This is the main method of the client, it will enter
         in a receive/send loop."""
         
