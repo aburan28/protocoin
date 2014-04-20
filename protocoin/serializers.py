@@ -178,7 +178,7 @@ class Version(object):
         self.addr_recv = IPv4Address()
         self.addr_from = IPv4Address()
         self.nonce = random.randint(0, 2**32-1)
-        self.user_agent = "/Satoshi:0.9.1"
+        self.user_agent = "/Satoshi:0.9.1/"
 
 class VersionSerializer(Serializer):
     """The version command serializer."""
