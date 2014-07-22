@@ -518,6 +518,72 @@ class GetAddrSerializer(Serializer):
     model_class = GetAddr
 
 
+
+
+
+
+
+
+class GetHeaders(object):
+    """
+    
+    
+    """
+    command = "getheaders"
+    
+class GetBlocks(object):
+    """         """
+    command = "getblocks"
+    
+    
+class GetBlocksSerializer(Serializer):
+    
+    
+    
+class Reject(object):
+    """         """
+    command = "reject"
+    
+
+class Filterload(object):
+    """     """
+    command = "filterload"
+    
+    
+    
+class Filteradd(object):
+    """         """
+    command = "filteradd"
+    
+    
+class Filterclear(object):
+    """         """
+    command = "filterclear"
+    
+    
+class Merkleblock(object):
+    """         """
+    command = "merkleblock"
+    
+    
+
+
+
+
+
+    "getblocks":,
+    "getheaders":GetHeadersSerializer,
+    "reject":RejectSerializer,
+    "filterload":FilterLoadSerializer,
+    "filteradd":FilteraddSerializer,
+    "filterclear":FilterclearSerializer,
+    "merkleblock":MerkleblockSerializer
+
+
+
+
+
+
 MESSAGE_MAPPING = {
     "version": VersionSerializer,
     "verack": VerAckSerializer,
@@ -532,4 +598,11 @@ MESSAGE_MAPPING = {
     "headers": HeaderVectorSerializer,
     "mempool": MemPoolSerializer,
     "getaddr": GetAddrSerializer,
+    "getblocks":GetBlocksSerializer,
+    "getheaders":GetHeadersSerializer,
+    "reject":RejectSerializer,
+    "filterload":FilterLoadSerializer,
+    "filteradd":FilteraddSerializer,
+    "filterclear":FilterclearSerializer,
+    "merkleblock":MerkleblockSerializer
 }
