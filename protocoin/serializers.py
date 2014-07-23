@@ -453,101 +453,10 @@ class Block(BlockHeader):
         self.prev_block = 0
         self.merkle_root = 0
         self.timestamp = 0
-        self.bits = 0
-        self.nonce = 0
-        self.txns = []
+        self. 
 
-    def __len__(self):
-        return len(self.txns)
-
-    def __iter__(self):
-        return __iter__(self.txns)
-
-    def __repr__(self):
-        return "<%s Version=[%d] Timestamp=[%s] Nonce=[%d] Hash=[%s] Tx Count=[%d]>" % \
-            (self.__class__.__name__, self.version, time.ctime(self.timestamp),
-                self.nonce, self.calculate_hash(), len(self))
-
-class BlockSerializer(Serializer):
-    """The deserializer for the blocks."""
-    model_class = Block
-    version = fields.UInt32LEField()
-    prev_block = fields.Hash()
-    merkle_root = fields.Hash()
-    timestamp = fields.UInt32LEField()
-    bits = fields.UInt32LEField()
-    nonce = fields.UInt32LEField()
-    txns = fields.ListField(TxSerializer)
-
-class HeaderVector(object):
-    """The header only vector."""
-    command = "headers"
-
-    def __init__(self):
-        self.headers = []
-
-    def __repr__(self):
-        return "<%s Count=[%d]>" % (self.__class__.__name__,
-            len(self))
-
-    def __len__(self):
-        return len(self.headers)
-
-    def __iter__(self):
-        return iter(self.headers)
-
-class HeaderVectorSerializer(Serializer):
-    """Serializer for the block header vector."""
-    model_class = HeaderVector
-    headers = fields.ListField(BlockHeaderSerializer)
-
-class MemPool(object):
-    """The mempool command."""
-    command = "mempool"
-
-class MemPoolSerializer(Serializer):
-    """The serializer for the mempool command."""
-    model_class = MemPool
-
-class GetAddr(object):
-    """The getaddr command."""
-    command = "getaddr"
-
-class GetAddrSerializer(Serializer):
-    """The serializer for the getaddr command."""
-    model_class = GetAddr
-
-
-
-
-
-
-
-
-class GetHeaders(object):
-    """
-    
-    
-    """
-    command = "getheaders"
-    
-class GetBlocks(object):
+class FilterloadSerializer(Serializer):
     """         """
-    command = "getblocks"
-    
-    
-class GetBlocksSerializer(Serializer):
-    
-    
-    
-class Reject(object):
-    """         """
-    command = "reject"
-    
-
-class Filterload(object):
-    """     """
-    command = "filterload"
     
     
     
@@ -566,8 +475,40 @@ class Merkleblock(object):
     command = "merkleblock"
     
     
+class MerkleblockSerializer(Serializer):
+    """
+    """
+    model_class = Merkleblock
+    version = fields.UInt32LEField()
+    prev_block = fields.Hash()
+    merkle_root = fields.Hash()
+    timestamp = fields.UInt32LEField()
+    bits = fields.UInt32LEField()
+    nonce = fields.UInt32LEField()
+    total_transactions = fields.UInt32LEField()
+    hashes = fields.List(Tx)
+    
+    
 
-
+class GetHeaders(object):
+    """
+    """
+    command = "getheaders"
+    def __init__(self):
+        self.version = 0
+        self.hash_count = 0
+        self.block_locator_hashes = ''
+        self.hash_stop = ''
+        
+        
+class GetHeadersSerializer(Serializer):
+    """
+    """
+    model_class = GetHeaders
+    version = fields.UInt32LEField()
+    block_locator_hashes = fields.Hash()
+    hash_stop = fields.Hash()
+      
 
 
 
