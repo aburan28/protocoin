@@ -179,7 +179,8 @@ class Version(object):
         self.addr_from = IPv4Address()
         self.nonce = random.randint(0, 2**32-1)
         self.user_agent = "/Satoshi:0.9.1/"
-
+		self.start_height = fields.UInt32LEField()
+		
 class VersionSerializer(Serializer):
     """The version command serializer."""
     model_class = Version
@@ -190,7 +191,10 @@ class VersionSerializer(Serializer):
     addr_from = fields.NestedField(IPv4AddressSerializer)
     nonce = fields.UInt64LEField()
     user_agent = fields.VariableStringField()
-
+	start_height = fields.UInt32LEField()
+	
+	
+	
 class VerAck(object):
     """The version acknowledge (verack) command."""
     command = "verack"
@@ -443,21 +447,10 @@ class BlockHeaderSerializer(Serializer):
     nonce = fields.UInt32LEField()
     txns_count = fields.VariableIntegerField()
 
-class Block(BlockHeader):
-    """The block message. This message contains all the transactions
-    present in the block."""
-    command = "block"
-
-    def __init__(self):
-        self.version = 0
-        self.prev_block = 0
-        self.merkle_root = 0
-        self.timestamp = 0
-        self. 
 
 class FilterloadSerializer(Serializer):
     """         """
-    
+    pass
     
     
 class Filteradd(object):
@@ -520,7 +513,16 @@ class GetHeadersSerializer(Serializer):
     "filterclear":FilterclearSerializer,
     "merkleblock":MerkleblockSerializer
 
-
+class GetBlocks(object):
+	"""		"""
+	command = 'getblocks'
+	def __init__(self):
+		version = 1
+		vHave = ''
+		hashes = []
+		
+		
+		
 
 
 
@@ -542,8 +544,8 @@ MESSAGE_MAPPING = {
     "getblocks":GetBlocksSerializer,
     "getheaders":GetHeadersSerializer,
     "reject":RejectSerializer,
-    "filterload":FilterLoadSerializer,
-    "filteradd":FilteraddSerializer,
-    "filterclear":FilterclearSerializer,
-    "merkleblock":MerkleblockSerializer
+    #"filterload":FilterLoadSerializer,
+    #"filteradd":FilteraddSerializer,
+    #"filterclear":FilterclearSerializer,
+    #"merkleblock":MerkleblockSerializer
 }
